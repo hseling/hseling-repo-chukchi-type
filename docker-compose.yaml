@@ -1,0 +1,47 @@
+version: '3.4'
+
+x-common-variables: &common-variables
+  HSELING_RPC_ENDPOINT: http://hse-api-web:80/rpc/
+  HSELING_API_ENDPOINT: http://hse-api-web:80/api/
+  RESTRICTED_MODE: 0
+
+services:
+  hse-api-web:
+    build:
+      context: .
+      dockerfile: hseling-api-chukchi-type/Dockerfile
+    ports:
+      - "5000:80"
+    volumes:
+      - type: bind
+        source: ./hseling-api-chukchi-type/hseling_api_chukchi_type
+        target: /app/hseling_api_chukchi_type
+      - type: bind
+        source: ./hseling-data-chukchi-type/api
+        target: /data
+    environment: *common-variables
+
+
+
+
+
+
+  hse-web-web:
+    build:
+      context: .
+      dockerfile: hseling-web-chukchi-type/Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - hse-api-web
+    environment: *common-variables
+    volumes:
+      - type: bind
+        source: ./hseling-web-chukchi-type/hseling_web_chukchi_type
+        target: /app/hseling_web_chukchi_type
+      - type: bind
+        source: ./hseling-web-chukchi-type/hseling_web_chukchi_type/static
+        target: /app/static
+      - type: bind
+        source: ./hseling-data-chukchi-type/web
+        target: /data

@@ -1,0 +1,15 @@
+{
+  "name": "hseling-web-chukchi-type",
+  "version": "1.0.0",
+  "description": "HSE Linguistics WEB: Chukchi Type.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mikhail Voronov <mikivo@list.ru>",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.5.1"
+  }
+}
