@@ -1,7 +1,6 @@
+waitress
 flask
-json-rpc
-
-requests
-lxml
-html5lib
-beautifulsoup4
+flask_cors
+pandas
+sklearn
+torch
