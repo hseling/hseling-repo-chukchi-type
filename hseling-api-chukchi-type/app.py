@@ -4,6 +4,7 @@ import os
 import pathlib
 import re
 import waitress
+from pathlib import Path
 from time import time_ns
 from typing import List
 from flask import abort, Blueprint, Flask, jsonify, Response, request
@@ -51,7 +52,7 @@ def tokenize(input_text: str) -> List[str]:
 
 def get_prediction(input_text: str) -> str:
     tokens = tokenize(input_text)
-    g = Generator(model_path=AWD_LSTM / 'chukchi_model.pt',
+    g = Generator(model_path=Path('/data') / 'chukchi_model.pt',
                   corpus_path=AWD_LSTM / 'chukchi_segments',
                   cuda=False)
     try:
