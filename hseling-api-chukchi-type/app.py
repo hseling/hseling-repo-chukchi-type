@@ -12,7 +12,7 @@ from flask_cors import CORS
 from segmentation.ncrffpp import NCRFpp
 from language_modelling.awdlstmlm.generate import Generator
 
-HOST = '127.0.0.1:5000'
+HOST = '0.0.0.0:5000'
 PYTHON = os.environ.get('WEB_DEVELOPMENT_PROJECT_PYTHON') or '/usr/bin/python3'
 _ROOT = pathlib.Path(__file__).parent.resolve()
 ROOT = str(_ROOT)
@@ -61,8 +61,16 @@ def get_prediction(input_text: str) -> str:
         raise Exception('Генерация не отработала')
     return result
 
+@app.before_request
+def log_request():
+    logger = logging.getLogger('waitress')
+    info = ' {host} {path} - {method}'.format(
+        host=request.host, method=request.method,
+        path=request.path)
+    logger.info(info)
 
-@api.after_request
+
+@app.after_request
 def log_response(response: Response) -> Response:
     logger = logging.getLogger('waitress')
     info = ' {host} {path} - {method} - {status}'.format(
@@ -90,6 +98,8 @@ def get_suggestions():
 
 app.register_blueprint(api, url_prefix='/api')
 
+def list_routes():
+    return ['%s' % rule for rule in app.url_map.iter_rules()]
 
 if __name__ == '__main__':
     logging.getLogger('waitress').setLevel(logging.INFO)

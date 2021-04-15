@@ -1,12 +1,7 @@
 FROM python:3.8
-
-WORKDIR /home/misha/app
-
-COPY requirements.txt ./
+WORKDIR /usr/src/app
+COPY hseling-api-chukchi-type/requirements.txt ./
 RUN pip install -r requirements.txt
-
-COPY . .
-
+COPY hseling-api-chukchi-type/. .
 EXPOSE 5000
-
 CMD ["python","app.py"]
