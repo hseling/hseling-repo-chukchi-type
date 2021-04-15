@@ -7,6 +7,7 @@ import Try from "@/components/Try";
 Vue.use(Router)
 
 export default new Router({
+    base: "/web/",
     routes: [
         {
             path: '/',
@@ -22,6 +23,12 @@ export default new Router({
             path: '/try',
             name: 'Try',
             component: Try
+        },
+        {
+            path: '*',
+            redirect: {
+                name: 'Home'
+            }
         }
     ]
 });
